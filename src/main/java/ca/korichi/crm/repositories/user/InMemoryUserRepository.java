@@ -2,7 +2,6 @@ package ca.korichi.crm.repositories.user;
 
 import ca.korichi.crm.services.users.User;
 import ca.korichi.crm.services.users.UserId;
-import ca.korichi.crm.services.users.UserRole;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -13,10 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Repository(value = "UserRepository")
 public class InMemoryUserRepository implements UserRepository {
-    private static final User fakeUser = new User(new UserId(), "name", UserRole.READER);
-    private static final Map<UserId, User> users = new ConcurrentHashMap<UserId, User>() {{
-        put(fakeUser.getUserId(), fakeUser);
-    }};
+
+    private static final Map<UserId, User> users = new ConcurrentHashMap<>();
 
     @Override
     public List<User> findAll() {
@@ -33,5 +30,17 @@ public class InMemoryUserRepository implements UserRepository {
         UserId generatedUserId = new UserId();
         users.put(generatedUserId, new User(generatedUserId, user));
         return users.get(generatedUserId);
+    }
+
+    @Override
+    public boolean exists(UserId userId) {
+        return users.containsKey(userId);
+    }
+
+    @Override
+    public boolean isReviewer(UserId userId) {
+        return findById(userId)
+                .filter(user -> user.isReviewer())
+                .isPresent();
     }
 }

@@ -3,6 +3,7 @@ package ca.korichi.crm.controllers.news;
 import ca.korichi.crm.services.news.News;
 import ca.korichi.crm.services.news.NewsId;
 import ca.korichi.crm.services.news.NewsService;
+import ca.korichi.crm.services.users.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +38,10 @@ public class NewsController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<News> create(@RequestBody News news) {
-        News createdNews = newsService.create(news);
+    public ResponseEntity<News> create(@RequestBody NewsDto newsDto) {
+
+        News createdNews = newsService.create(
+                new News(null, newsDto.getTitle(), newsDto.getContent()));
         return ResponseEntity
                 .created(URI.create("/news/" + createdNews.getNewsId()))
                 .body(createdNews);
@@ -50,4 +53,19 @@ public class NewsController {
         return ResponseEntity.accepted().body(deletedNews);
     }
 
+    @PostMapping("/{news-id}/reviewers")
+    public ResponseEntity<Void> addReviewers(
+            @PathVariable("news-id") NewsId newsId, @RequestBody List<UserId> userIds) {
+        newsService.addReviewers(newsId, userIds);
+        return ResponseEntity.ok().build();
+
+    }
+
+    @PostMapping("/{news-id}/mandatoryReviewers")
+    public ResponseEntity<Void> addMandatoryReviewers(
+            @PathVariable("news-id") NewsId newsId, @RequestBody List<UserId> userIds) {
+        newsService.addMandatoryReviewers(newsId, userIds);
+        return ResponseEntity.ok().build();
+
+    }
 }

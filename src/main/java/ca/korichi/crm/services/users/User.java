@@ -19,4 +19,8 @@ public class User {
         this.name = name;
         this.userRole = userRole;
     }
+
+    public boolean isReviewer() {
+        return userRole.equals(UserRole.REVIEWER);
+    }
 }

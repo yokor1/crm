@@ -12,4 +12,8 @@ public interface UserRepository {
     Optional<User> findById(UserId userId);
 
     User create(User user);
+
+    boolean exists(UserId userId);
+
+    boolean isReviewer(UserId userId);
 }

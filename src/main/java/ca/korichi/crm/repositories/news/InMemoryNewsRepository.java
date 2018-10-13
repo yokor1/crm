@@ -37,4 +37,11 @@ public class InMemoryNewsRepository implements NewsRepository {
         News removedNews = news.remove(newsId);
         return Optional.ofNullable(removedNews);
     }
+
+    @Override
+    public Optional<News> update(News updatedNews) {
+        if (!news.containsKey(updatedNews.getNewsId())) return Optional.empty();
+        news.replace(updatedNews.getNewsId(), updatedNews);
+        return Optional.of(updatedNews);
+    }
 }

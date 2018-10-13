@@ -14,4 +14,6 @@ public interface NewsRepository {
     News create(News news);
 
     Optional<News> delete(NewsId newsId);
+
+    Optional<News> update(News news);
 }
