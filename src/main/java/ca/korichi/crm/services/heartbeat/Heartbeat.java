@@ -1,4 +1,4 @@
-package ca.korichi.crm.controllers.heartbeat;
+package ca.korichi.crm.services.heartbeat;
 
 
 import lombok.Value;

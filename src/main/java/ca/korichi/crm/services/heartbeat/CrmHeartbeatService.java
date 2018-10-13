@@ -1,6 +1,5 @@
 package ca.korichi.crm.services.heartbeat;
 
-import ca.korichi.crm.controllers.heartbeat.Heartbeat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
