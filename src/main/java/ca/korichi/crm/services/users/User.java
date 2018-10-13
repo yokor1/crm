@@ -1,10 +1,10 @@
-package ca.korichi.crm.services.news;
+package ca.korichi.crm.services.users;
 
 import lombok.Value;
 
 @Value
 public class User {
-    private String userId;
+    private UserId userId;
     private String name;
     private UserRole userRole;
 }

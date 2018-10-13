@@ -1,6 +1,6 @@
 package ca.korichi.crm.services.news;
 
-import ca.korichi.crm.repositories.NewsRepository;
+import ca.korichi.crm.repositories.news.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +22,20 @@ public class CrmNewsService implements NewsService {
     }
 
     @Override
-    public News findById(String newsId) {
+    public News findById(NewsId newsId) {
         return newsRepository.findById(newsId)
                 .orElseThrow(() -> new NewsNotFoundException("userId not found."));
     }
+
+    @Override
+    public News create(News news) {
+        return newsRepository.create(news);
+    }
+
+    @Override
+    public News delete(NewsId newsId) {
+        return newsRepository.delete(newsId).orElseThrow(() -> new NewsNotFoundException("newsId not found"));
+    }
+
+
 }

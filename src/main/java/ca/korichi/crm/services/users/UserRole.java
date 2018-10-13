@@ -1,4 +1,4 @@
-package ca.korichi.crm.services.news;
+package ca.korichi.crm.services.users;
 
 public enum UserRole {
     REVIEWER,

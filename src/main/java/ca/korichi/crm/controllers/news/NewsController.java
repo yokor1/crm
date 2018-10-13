@@ -1,15 +1,14 @@
 package ca.korichi.crm.controllers.news;
 
 import ca.korichi.crm.services.news.News;
+import ca.korichi.crm.services.news.NewsId;
 import ca.korichi.crm.services.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -34,7 +33,21 @@ public class NewsController {
 
     @GetMapping(value = "/{news-id}")
     public ResponseEntity<News> findById(@PathVariable("news-id") String newsId) {
-        return ResponseEntity.ok(newsService.findById(newsId));
+        return ResponseEntity.ok(newsService.findById(new NewsId(newsId)));
+    }
+
+    @PostMapping(value = "/")
+    public ResponseEntity<News> create(@RequestBody News news) {
+        News createdNews = newsService.create(news);
+        return ResponseEntity
+                .created(URI.create("/news/" + createdNews.getNewsId()))
+                .body(createdNews);
+    }
+
+    @DeleteMapping(value = "/{news-id}")
+    public ResponseEntity<News> delete(@PathVariable("news-id") String newsId) {
+        News deletedNews = newsService.delete(new NewsId(newsId));
+        return ResponseEntity.accepted().body(deletedNews);
     }
 
 }
