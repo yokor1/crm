@@ -6,4 +6,6 @@ public interface UserService {
     List<User> findAll();
 
     User findById(UserId userId);
+
+    User create(User user);
 }

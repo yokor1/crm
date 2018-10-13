@@ -6,11 +6,9 @@ import ca.korichi.crm.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -35,6 +33,14 @@ public class UserController {
     ResponseEntity<User> findById(@PathVariable("user-id") String userId) {
 
         return ResponseEntity.ok(userService.findById(new UserId(userId)));
+    }
+
+    @PostMapping("")
+    public ResponseEntity<User> create(@RequestBody User user) {
+        User createdUser = userService.create(user);
+        return ResponseEntity
+                .created(URI.create("/users/" + createdUser.getUserId()))
+                .body(createdUser);
     }
 
 

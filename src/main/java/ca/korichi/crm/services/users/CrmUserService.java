@@ -25,4 +25,9 @@ public class CrmUserService implements UserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("userId not found"));
     }
+
+    @Override
+    public User create(User user) {
+        return userRepository.create(user);
+    }
 }
